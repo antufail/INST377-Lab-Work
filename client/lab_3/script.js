@@ -7,7 +7,7 @@
 */
 /* eslint-enable max-len */
 // set our first slide's position to "0", the opening position in an array
-const slidePosition = 0;
+let slidePosition = 0;
 
 // gather a reference to every slide we're using via the class name and querySelectorAll
 const slides = document.querySelectorAll('.carousel_item');
@@ -24,10 +24,10 @@ function updateSlidePosition() {
   // and remove the 'visible' class from each classList
   // then add a class 'hidden' to all of them
   slidesArray.forEach((current) => {
-    current.classlist.remove("visible");
-    current.classlist.add("hidden");
+    current.classList.remove("visible");
+    current.classList.add("hidden");
   });
-  slides[slidePosition].classlist.add("visible");
+  slides[slidePosition].classList.add("visible");
   // outside your .forEach,
   // add a 'visible' class to the slide at the current slidePosition in slides
 }
@@ -39,8 +39,8 @@ function moveToNextSlide() {
     and if so, sets your slidePosition to the first index of an array
     if not, set the slidePosition to the current position plus one
   */
-  if (updateSlidePosition() === totalSlides) {
-    slidePosition = slidesArray[0]
+  if (slidePosition === totalSlides-1) {
+    slidePosition = 0
   } else {
     slidePosition = updateSlidePosition() + 1
   }
