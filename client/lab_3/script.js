@@ -23,7 +23,11 @@ function updateSlidePosition() {
   // loop through all the slides in your slideArray
   // and remove the 'visible' class from each classList
   // then add a class 'hidden' to all of them
-
+  slidesArray.forEach((current) => {
+    current.classlist.remove("visible");
+    current.classlist.add("hidden");
+  });
+  slides[slidePosition].classlist.add("visible");
   // outside your .forEach,
   // add a 'visible' class to the slide at the current slidePosition in slides
 }
@@ -35,7 +39,12 @@ function moveToNextSlide() {
     and if so, sets your slidePosition to the first index of an array
     if not, set the slidePosition to the current position plus one
   */
-  updateSlidePosition(); // this is how you call a function within a function
+  if (updateSlidePosition() === totalSlides) {
+    slidePosition = slidesArray[0]
+  } else {
+    slidePosition = updateSlidePosition() + 1
+  }
+   // this is how you call a function within a function
 }
 function moveToPrevSlide() {
   // add your code in here for when you click the "prev" button
@@ -45,6 +54,11 @@ function moveToPrevSlide() {
     and if so, sets your slidePosition to the last slide position in totalSlides
     if not, set the slidePosition to the current position minus one
   */
+    if (updateSlidePosition() === totalSlides) {
+      slidePosition = slidesArray[-1]
+    } else {
+      slidePosition = updateSlidePosition() - 1
+    }
   updateSlidePosition();
 }
 
@@ -58,5 +72,10 @@ document.querySelector('.next') // Get the appropriate element (<button class="n
     moveToNextSlide(); // call the function above to handle this
   });
 
+  document.querySelector('.prev') // Get the appropriate element (<button class="next">)
+  .addEventListener('click', () => { // set an event listener on it - when it's clicked, do this callback function
+    console.log('clicked prev'); // let's tell the client console we made it to this point in the script
+    moveToPrevSlide(); // call the function above to handle this
+  });
 // Paying close attention to the above queryselector, write one that fires
 // when you want a "prev" slide
