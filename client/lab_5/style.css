@@ -30,7 +30,7 @@
     margin: 0;
     padding: 0;
   
-    font-family: ‘Segoe UI’, Candara, ‘Bitstream Vera Sans’, ‘DejaVu Sans’, ‘Bitsream Vera Sans’, ‘Trebuchet MS’, Verdana, ‘Verdana Ref’, sans-serif;
+    font-family: 'Segoe UI', 'Candara', 'Bitstream Vera Sans', 'DejaVu Sans', 'Bitsream Vera Sans', 'Trebuchet MS', 'Verdana', 'Verdana Ref', 'sans-serif';
     font-weight: 400;
     line-height: 1.5;
     background-color: rgb(239, 239, 239);
@@ -267,6 +267,7 @@
   
   .prev:hover,
   .next:hover {
+    margin: 0;
   }
   
   /*

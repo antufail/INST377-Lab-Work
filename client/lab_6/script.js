@@ -10,9 +10,20 @@
     Under this comment place any utility functions you need - like an inclusive random number selector
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
 
 function injectHTML(list) {
   console.log('fired injectHTML');
+  const target = document.querySelector('#restaurants_list')
+  target.innerHTML='';
+  list.forEach((item, index) => {
+    const str = `<li>${item.name}</li>`;
+    target.innerHTML += str
+  })
   /*
   ## JS and HTML Injection
     There are a bunch of methods to inject text or HTML into a document using JS
@@ -63,14 +74,14 @@ async function mainEvent() {
   // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
   const submit = document.querySelector('button[type="submit"]'); // get a reference to your submit button
-  submit.style.display = 'none'; // let your submit button disappear
-
+  //submit.style.display = 'none'; // let your submit button disappear
+  
   /*
     Let's get some data from the API - it will take a second or two to load
     This next line goes to the request for 'GET' in the file at /server/routes/foodServiceRoutes.js
     It's at about line 27 - go have a look and see what we're retrieving and sending back.
    */
-  const results = await fetch('/api/foodServicesPG');
+  const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json');
   const arrayFromJson = await results.json(); // here is where we get the data from our request as JSON
 
   /*
