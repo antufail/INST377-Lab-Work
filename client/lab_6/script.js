@@ -15,6 +15,14 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
 }
+function filterList(list, query) {
+  return list.filter((item)=> {
+    const lowerCaseName = item.name.toLowerCase();
+    const lowerCaseQuery = query.toLowerCase();
+    return lowerCaseName.includes(lowerCaseQuery)
+  })
+}
+
 
 function injectHTML(list) {
   console.log('fired injectHTML');
@@ -42,7 +50,11 @@ function injectHTML(list) {
 
 function processRestaurants(list) {
   console.log('fired restaurants list');
-
+  const range = [...Array[15].keys()];
+  return newArray = range.map(() => {
+    const index=getRandomInt(0, list.length-1);
+    return list[index]
+  })
   /*
     ## Process Data Separately From Injecting It
       This function should accept your 1,000 records
@@ -73,8 +85,12 @@ async function mainEvent() {
 
   // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
-  const submit = document.querySelector('button[type="submit"]'); // get a reference to your submit button
-  //submit.style.display = 'none'; // let your submit button disappear
+  const submit = document.querySelector('button[type="submit"]'); 
+  const filterDataButton = document.querySelector('#filter');
+  const loadDataButton = document.querySelector('#data_load');
+  const generateListButton = document.querySelector('#generate');// get a reference to your submit button
+  const loadAnimation = document.querySelector('#data_load_anime')
+  loadAnimation.style.display = 'none'; // let your submit button disappear
   
   /*
     Let's get some data from the API - it will take a second or two to load
@@ -91,6 +107,7 @@ async function mainEvent() {
     The 'data' key, which we set at line 38 in foodServiceRoutes.js, contains all 1,000 records we need
   */
   console.table(arrayFromJson.data);
+  injectHTML(arrayFromJson)
 
   // in your browser console, try expanding this object to see what fields are available to work with
   // for example: arrayFromJson.data[0].name, etc
@@ -105,20 +122,36 @@ async function mainEvent() {
 
     // And here's an eventListener! It's listening for a "submit" button specifically being clicked
     // this is a synchronous event event, because we already did our async request above, and waited for it to resolve
-    form.addEventListener('submit', (submitEvent) => {
+    loadDataButton.addEventListener('click', (submitEvent) => {
       // This is needed to stop our page from changing to a new URL even though it heard a GET request
-      submitEvent.preventDefault();
-
+      console.log("loading data")
+      loadAnimation.style.display = 'inline-block';
       // This constant will have the value of your 15-restaurant collection when it processes
       const restaurantList = processRestaurants(arrayFromJson.data);
 
       // And this function call will perform the "side effect" of injecting the HTML list for you
-      injectHTML(restaurantList);
+      //injectHTML(restaurantList);
 
       // By separating the functions, we open the possibility of regenerating the list
       // without having to retrieve fresh data every time
       // We also have access to some form values, so we could filter the list based on name
     });
+
+    filterDataButton.addEventListener('click', (event) => { 
+      console.log('clicked FilterButton');
+      const formData = new FormData(form);
+      const formProps = Object.fromEntries(formData);
+      console.log(formProps);
+      const newList = filterList(currentList, formProps.resto);
+      console.log(newList)
+      injectHTML(newList);
+    });
+
+    generateListButton.addEventListener('click', (event) => { 
+      console.log('clicked generateListButton');
+      const rList = cutRestaurantList(arrayFromJson)
+      injectHTML(rList)
+    })
   }
 }
 
