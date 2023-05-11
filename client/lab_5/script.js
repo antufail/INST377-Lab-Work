@@ -2,6 +2,13 @@
   Hook this script to index.html
   by adding `<script src="script.js">` just before your closing `</body>` tag
 */
+function filterList(list, query) {
+  return list.filter((item)=> {
+    const lowerCaseName = item.name.toLowerCase();
+    const lowerCaseQuery = query.toLowerCase();
+    return lowerCaseName.includes(lowerCaseQuery)
+  })
+}
 
 async function mainEvent() { // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); 
@@ -66,6 +73,8 @@ async function mainEvent() { // the async keyword means we can make API requests
     const formData = new FormData(form);
     const formProps = Object.fromEntries(formData);
     console.log(formProps);
+    const newList = filterList(currentList, formProps.resto);
+    console.log(newList)
   })
 }
 
