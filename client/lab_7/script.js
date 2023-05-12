@@ -78,8 +78,9 @@ function getRandomInt(min, max) {
     const loadDataButton = document.querySelector('#data_load');
     const generateListButton = document.querySelector('#generate');// get a reference to your submit button
     const loadAnimation = document.querySelector('#data_load_anime')
+    const textField = document.querySelector("#resto")
     loadAnimation.style.display = 'none'; // let your submit button disappear
-    
+    generateListButton.style.display = 'none';
     /*
       Let's get some data from the API - it will take a second or two to load
       This next line goes to the request for 'GET' in the file at /server/routes/foodServiceRoutes.js
@@ -95,7 +96,7 @@ function getRandomInt(min, max) {
       The 'data' key, which we set at line 38 in foodServiceRoutes.js, contains all 1,000 records we need
     */
     console.table(arrayFromJson.data);
-    injectHTML(arrayFromJson)
+    injectHTML(arrayFromJson);
   
     // in your browser console, try expanding this object to see what fields are available to work with
     // for example: arrayFromJson.data[0].name, etc
@@ -130,7 +131,7 @@ function getRandomInt(min, max) {
         const formData = new FormData(form);
         const formProps = Object.fromEntries(formData);
         console.log(formProps);
-        const newList = filterList(currentList, formProps.resto);
+        const newList = filterList(arrayFromJson, formProps.resto);
         console.log(newList)
         injectHTML(newList);
       });
@@ -138,7 +139,15 @@ function getRandomInt(min, max) {
       generateListButton.addEventListener('click', (event) => { 
         console.log('clicked generateListButton');
         const rList = cutRestaurantList(arrayFromJson)
-        injectHTML(rList)
+        injectHTML(rList);
+      })
+
+      textField.addEventListener('input', (event)=> {
+        console.log('input', event.target.value);
+        const newList = filterList(arrayFromJson, event.target.value);
+        console.log(newList);
+        injectHTML(newList);
+
       })
     }
   }
