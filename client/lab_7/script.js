@@ -125,31 +125,30 @@ function getRandomInt(min, max) {
         // without having to retrieve fresh data every time
         // We also have access to some form values, so we could filter the list based on name
       });
-  
-      filterDataButton.addEventListener('click', (event) => { 
-        console.log('clicked FilterButton');
-        const formData = new FormData(form);
-        const formProps = Object.fromEntries(formData);
-        console.log(formProps);
-        const newList = filterList(arrayFromJson, formProps.resto);
-        console.log(newList)
-        injectHTML(newList);
-      });
-  
-      generateListButton.addEventListener('click', (event) => { 
-        console.log('clicked generateListButton');
-        const rList = cutRestaurantList(arrayFromJson)
-        injectHTML(rList);
-      })
-
-      textField.addEventListener('input', (event)=> {
-        console.log('input', event.target.value);
-        const newList = filterList(arrayFromJson, event.target.value);
-        console.log(newList);
-        injectHTML(newList);
-
-      })
     }
+    filterDataButton.addEventListener('click', (event) => { 
+      console.log('clicked FilterButton');
+      const formData = new FormData(form);
+      const formProps = Object.fromEntries(formData);
+      console.log(formProps);
+      const newList = filterList(arrayFromJson, formProps.resto);
+      console.log(newList)
+      injectHTML(newList);
+    });
+
+    generateListButton.addEventListener('click', (event) => { 
+      console.log('clicked generateListButton');
+      const rList = cutRestaurantList(arrayFromJson)
+      injectHTML(rList);
+    })
+
+    textField.addEventListener('input', (event)=> {
+      console.log('input', event.target.value);
+      const newList = filterList(arrayFromJson, event.target.value);
+      console.log(newList);
+      injectHTML(newList);
+
+    })
   }
   
   /*

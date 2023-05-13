@@ -136,23 +136,22 @@ async function mainEvent() {
       // without having to retrieve fresh data every time
       // We also have access to some form values, so we could filter the list based on name
     });
-
-    filterDataButton.addEventListener('click', (event) => { 
-      console.log('clicked FilterButton');
-      const formData = new FormData(form);
-      const formProps = Object.fromEntries(formData);
-      console.log(formProps);
-      const newList = filterList(currentList, formProps.resto);
-      console.log(newList)
-      injectHTML(newList);
-    });
-
-    generateListButton.addEventListener('click', (event) => { 
-      console.log('clicked generateListButton');
-      const rList = cutRestaurantList(arrayFromJson)
-      injectHTML(rList)
-    })
   }
+  filterDataButton.addEventListener('click', (event) => { 
+    console.log('clicked FilterButton');
+    const formData = new FormData(form);
+    const formProps = Object.fromEntries(formData);
+    console.log(formProps);
+    const newList = filterList(currentList, formProps.resto);
+    console.log(newList)
+    injectHTML(newList);
+});
+
+generateListButton.addEventListener('click', (event) => { 
+    console.log('clicked generateListButton');
+    const rList = cutRestaurantList(arrayFromJson)
+    injectHTML(rList)
+})
 }
 
 /*
